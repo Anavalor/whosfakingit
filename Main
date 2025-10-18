@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Who's the Imposter</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    :root {
+      --primary: #00bfff;
+      --accent: #ff4081;
+      --text-light: #e0e0e0;
+      --text-muted: #a0a0a0;
+      --card-bg: rgba(255, 255, 255, 0.08);
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      font-family: "Poppins", sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      color: var(--text-light);
+      background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #0f2027);
+      background-size: 400% 400%;
+      animation: gradientShift 12s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      padding: 40px 30px;
+      width: 90%;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
+      transform: scale(0.95);
+      opacity: 0;
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    h1 {
+      color: var(--primary);
+      font-size: 2.4em;
+      margin-bottom: 0.2em;
+      text-shadow: 0 0 20px rgba(0,191,255,0.6);
+    }
+
+    h2 {
+      font-size: 1.8em;
+      color: var(--text-light);
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.1em;
+      color: var(--text-muted);
+    }
+
+    button {
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border: none;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 1.1em;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+      transition: 0.3s ease;
+      box-shadow: 0 0 20px rgba(0,191,255,0.4);
+      margin-top: 20px;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 25px rgba(255,64,129,0.5);
+    }
+
+    input {
+      padding: 12px;
+      font-size: 1.1em;
+      border-radius: 10px;
+      border: none;
+      text-align: center;
+      width: 90px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      outline: none;
+      margin-top: 10px;
+      transition: background 0.3s ease;
+    }
+
+    input:focus {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    #wordDisplay {
+      margin-top: 25px;
+      font-size: 1.8em;
+      font-weight: bold;
+      text-shadow: 0 0 15px rgba(255,255,255,0.6);
+      min-height: 50px;
+    }
+
+    .glow {
+      color: var(--accent);
+      text-shadow: 0 0 15px var(--accent), 0 0 30px var(--accent);
+      animation: pulse 1.5s infinite alternate;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(1.1); opacity: 0.85; }
+    }
+
+    .hidden { display: none; }
+
+    /* Floating Lights */
+    .light {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.5;
+      animation: floatLight 15s infinite alternate ease-in-out;
+    }
+
+    @keyframes floatLight {
+      0% { transform: translateY(0) translateX(0); }
+      100% { transform: translateY(-100px) translateX(50px); }
+    }
+
+    .light:nth-child(1) { background: var(--primary); top: 20%; left: 10%; animation-delay: 0s; }
+    .light:nth-child(2) { background: var(--accent); bottom: 20%; right: 10%; animation-delay: 3s; }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 2em; }
+      h2 { font-size: 1.5em; }
+      .card { padding: 30px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="light"></div>
+  <div class="light"></div>
+
+  <!-- Setup -->
+  <div id="setup" class="card">
+    <h1>Who’s Faking It?</h1>
+    <p>Enter number of players (min 3):</p>
+    <input id="playerCount" type="number" min="3" max="20" value="4">
+    <br>
+    <button onclick="startGame()">Start Game</button>
+  </div>
+
+  <!-- Reveal -->
+  <div id="reveal" class="card hidden">
+    <h2 id="playerLabel"></h2>
+    <button id="revealBtn" onclick="revealWord()">Show Word</button>
+    <div id="wordDisplay"></div>
+  </div>
+
+  <!-- Start Round -->
+  <div id="startRound" class="card hidden">
+    <h2 id="startMsg"></h2>
+    <button onclick="restart()">Play Again</button>
+  </div>
+
+  <script>
+const subjects = [
+"Pizza","Burger","Ice Cream","Chocolate","Pasta","Taco","Sushi","Hot Dog","Coffee","Tea",
+"Juice","Milkshake","Popcorn","Cake","Cookie","Donut","Waffle","Pancake","Apple","Banana",
+"Orange","Grapes","Watermelon","Strawberry","Cheese","Egg","Chicken","Beef","Fish","Rice",
+"Soup","Salad","Sandwich","Fries","Cereal","Bread","Butter","Honey","Jam","Car","Bike",
+"Bus","Train","Airplane","Boat","Ship","Helicopter","Rocket","Skateboard","Scooter","Motorbike",
+"School","Library","Museum","Park","Zoo","Beach","Mountain","Forest","River","Lake",
+"City","Village","Castle","House","Apartment","Tent","Hotel","Restaurant","Cafe","Store",
+"Market","Shop","Bank","Hospital","Clinic","Pharmacy","Fire Station","Police Station","Airport","Train Station",
+"Soccer","Basketball","Tennis","Baseball","Cricket","Golf","Running","Swimming","Cycling","Skiing",
+"Snowboarding","Surfing","Yoga","Gym","Dance","Boxing","Hockey","Volleyball","Bowling","Archery",
+"Dog","Cat","Bird","Fish","Rabbit","Horse","Cow","Pig","Sheep","Lion",
+"Tiger","Bear","Elephant","Monkey","Owl","Fox","Wolf","Penguin","Dolphin","Shark",
+"Turtle","Crab","Octopus","Whale","Frog","Butterfly","Bee","Ant","Spider","Snake",
+"Dragon","Unicorn","Fairy","Wizard","Witch","Pirate","Knight","Princess","King","Queen",
+"Robot","Alien","Zombie","Vampire","Ghost","Clown","Ninja","Samurai","Superhero","Detective",
+"Magician","Artist","Singer","Dancer","Actor","Writer","Chef","Farmer","Teacher","Doctor",
+"Pilot","Astronaut","Scientist","Engineer","Police","Soldier","Firefighter","Judge","Mayor","Coach",
+"Movie","Song","Book","Comic","Game","Video Game","Board Game","Puzzle","Toy","Ball",
+"Camera","Phone","Laptop","Tablet","Watch","Sunglasses","Hat","Jacket","Shoes","Bag",
+"Umbrella","Chair","Table","Bed","Couch","Lamp","Mirror","Door","Window","Rug",
+"Clock","Pen","Notebook","Paper","Glue","Scissors","Marker","Eraser","Folder","Envelope",
+"Coin","Money","Credit Card","Ticket","Passport","Map","Compass","Binoculars","Flashlight","Lantern",
+"Fire","Water","Earth","Air","Sun","Moon","Star","Cloud","Rain","Snow",
+"Wind","Lightning","Thunder","Rainbow","Volcano","Cave","Island","Desert","Forest","Beach",
+"Mountain","River","Lake","Ocean","Bridge","Road","Tunnel","Tower","Castle","Palace",
+"Garden","Fountain","Statue","Bench","Mailbox","Fence","Flag","Sign","Poster","Banner",
+"Festival","Birthday","Party","Gift","Cake","Candle","Balloon","Confetti","Music","Dance",
+"Concert","Theater","Movie Theater","Arcade","Roller Coaster","Ferris Wheel","Carousel","Zoo","Aquarium","Planetarium",
+"Space","Galaxy","Planet","Comet","Meteor","Rocket","Satellite","Astronaut","Telescope","UFO",
+"Carpet","Bookstore","Cafe","Restaurant","Diner","Bakery","Library","Museum","School","University",
+"Gym","Stadium","Park","Playground","Swings","Slide","Sandbox","Treehouse","Campfire","Tent",
+"Backpack","Suitcase","Wallet","Keys","Gloves","Scarf","Necklace","Ring","Bracelet","Headphones",
+"Speaker","Microphone","Camera","Drone","Tripod","Laptop","Mouse","Keyboard","Printer","Screen",
+"TV","Remote","Phone","Charger","Cable","Battery","Lamp","Flashlight","Clock","Watch",
+"Painting","Picture","Poster","Frame","Mirror","Plant","Flower","Tree","Bush","Grass",
+"Leaf","Rock","Stone","Sand","Shell","Feather","Animal Track","Footprint","Trail","Path",
+"Bridge","Gate","Fence","Wall","Door","Window","Roof","Chimney","Stairs","Elevator",
+"Chair","Table","Couch","Bed","Mattress","Pillow","Blanket","Sheet","Curtain","Rug",
+"Pan","Pot","Knife","Fork","Spoon","Plate","Cup","Glass","Bottle","Jar",
+"Microwave","Oven","Fridge","Toaster","Kettle","Blender","Mixer","Coffee Maker","Stove","Grill",
+"Ball","Frisbee","Football","Soccer Ball","Basketball","Tennis Ball","Baseball","Golf Ball","Bowling Ball","Hockey Puck",
+"Bat","Racket","Club","Stick","Net","Goal","Hoop","Flag","Target","Arrow",
+"Drum","Guitar","Piano","Keyboard","Violin","Trumpet","Saxophone","Flute","Harp","Microphone",
+"Stage","Spotlight","Curtain","Audience","Crowd","Singer","Dancer","Actor","Director","Producer",
+"Movie","TV Show","Cartoon","Anime","Comic","Manga","Book","Novel","Poem","Story",
+"Friend","Family","Brother","Sister","Mother","Father","Uncle","Aunt","Cousin","Neighbor",
+"Pet","Dog","Cat","Fish","Bird","Rabbit","Hamster","Lizard","Turtle","Snake",
+"Sunflower","Rose","Tulip","Daisy","Cactus","Oak","Pine","Maple","Palm","Bamboo",
+"Raincoat","Boots","Sunglasses","Hat","Scarf","Gloves","Jacket","Shirt","Pants","Shoes",
+"Sandals","Sneakers","Watch","Bracelet","Necklace","Ring","Earrings","Bag","Backpack","Suitcase",
+"Camera","Phone","Laptop","Tablet","Charger","Headphones","Speaker","Microphone","TV","Remote",
+"Game Console","Video Game","Board Game","Puzzle","Toy","Doll","Action Figure","LEGO","Blocks","Card",
+"Dice","Chess","Checkers","Dominoes","Jenga","Yo-Yo","Kite","Frisbee","Skateboard","Scooter",
+"Bike","Trampoline","Swing","Slide","Sandbox","Slide","Pool","Beach Ball","Float","Surfboard",
+"Snowboard","Ski","Sled","Ice Skates","Helmet","Knee Pads","Gloves","Jacket","Boots","Scarf",
+"Mountain","Hill","Forest","Tree","River","Lake","Ocean","Beach","Island","Cave",
+"Bridge","Tunnel","Road","Street","Path","Trail","Park","Playground","Stadium","Arena",
+"School","University","Library","Museum","Zoo","Aquarium","Planetarium","Restaurant","Cafe","Bakery",
+"Store","Mall","Market","Hospital","Clinic","Pharmacy","Bank","Post Office","Fire Station","Police Station",
+"Airport","Train Station","Bus Station","Station","Dock","Harbor","Port","Ship","Boat","Canoe",
+"Kayak","Submarine","Rocket","Spaceship","Alien","Robot","Wizard","Witch","Pirate","Knight",
+"Princess","King","Queen","Superhero","Detective","Magician","Artist","Singer","Dancer","Actor",
+"Chef","Farmer","Teacher","Doctor","Pilot","Astronaut","Scientist","Engineer","Police","Soldier",
+"Firefighter","Judge","Mayor","Coach","Driver","Sailor","Explorer","Adventurer","Traveler","Student",
+"Friendship","Love","Happiness","Sadness","Fear","Courage","Magic","Adventure","Treasure","Mystery",
+"Secret","Surprise","Holiday","Vacation","Journey","Festival","Celebration","Birthday","Party","Gift",
+"Music","Dance","Song","Melody","Rhythm","Beat","Concert","Stage","Theater","Show",
+"Game","Sport","Competition","Winner","Loser","Champion","Team","Player","Score","Goal"
+];
+
+
+
+    let totalPlayers = 0;
+    let subject = '';
+    let imposter = 0;
+    let currentPlayer = 1;
+    let randomStarter = 0;
+
+    function startGame() {
+      totalPlayers = parseInt(document.getElementById('playerCount').value);
+      if (isNaN(totalPlayers) || totalPlayers < 3) {
+        alert('You need at least 3 players!');
+        return;
+      }
+
+      subject = subjects[Math.floor(Math.random() * subjects.length)];
+      imposter = Math.floor(Math.random() * totalPlayers) + 1;
+
+      // ensure random starter is independent from imposter
+      do {
+        randomStarter = Math.floor(Math.random() * totalPlayers) + 1;
+      } while (randomStarter === imposter && totalPlayers > 3 && Math.random() < 0.5);
+
+      currentPlayer = 1;
+
+      document.getElementById('setup').classList.add('hidden');
+      document.getElementById('reveal').classList.remove('hidden');
+      updatePlayerLabel();
+    }
+
+    function updatePlayerLabel() {
+      const label = document.getElementById('playerLabel');
+      const wordDisplay = document.getElementById('wordDisplay');
+      const revealBtn = document.getElementById('revealBtn');
+
+      wordDisplay.textContent = '';
+      wordDisplay.classList.remove('glow');
+      revealBtn.textContent = 'Show Word';
+      label.textContent = `Player ${currentPlayer}, tap to see your word`;
+    }
+
+    function revealWord() {
+      const wordDisplay = document.getElementById('wordDisplay');
+      const revealBtn = document.getElementById('revealBtn');
+
+      if (wordDisplay.textContent === '') {
+        if (currentPlayer === imposter) {
+          wordDisplay.textContent = 'You are the IMPOSTER!';
+          wordDisplay.classList.add('glow');
+        } else {
+          wordDisplay.textContent = subject;
+        }
+        revealBtn.textContent = 'Hide and pass';
+      } else {
+        if (currentPlayer < totalPlayers) {
+          currentPlayer++;
+          updatePlayerLabel();
+        } else {
+          endReveal();
+        }
+      }
+    }
+
+    function endReveal() {
+      document.getElementById('reveal').classList.add('hidden');
+      document.getElementById('startRound').classList.remove('hidden');
+      document.getElementById('startMsg').textContent =
+        `Player ${randomStarter} goes first!`;
+    }
+
+    function restart() {
+      document.getElementById('startRound').classList.add('hidden');
+      document.getElementById('setup').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
