@@ -6,7 +6,6 @@
   <title>Who's the Imposter</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
     :root {
       --primary: #00bfff;
       --accent: #ff4081;
@@ -14,7 +13,6 @@
       --text-muted: #a0a0a0;
       --card-bg: rgba(255, 255, 255, 0.08);
     }
-
     body {
       margin: 0;
       padding: 0;
@@ -29,13 +27,11 @@
       background-size: 400% 400%;
       animation: gradientShift 12s ease infinite;
     }
-
     @keyframes gradientShift {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
     .card {
       background: var(--card-bg);
       backdrop-filter: blur(15px);
@@ -49,29 +45,10 @@
       opacity: 0;
       animation: fadeInUp 0.8s ease forwards;
     }
-
-    @keyframes fadeInUp {
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    h1 {
-      color: var(--primary);
-      font-size: 2.4em;
-      margin-bottom: 0.2em;
-      text-shadow: 0 0 20px rgba(0,191,255,0.6);
-    }
-
-    h2 {
-      font-size: 1.8em;
-      color: var(--text-light);
-      margin-bottom: 10px;
-    }
-
-    p {
-      font-size: 1.1em;
-      color: var(--text-muted);
-    }
-
+    @keyframes fadeInUp { to { transform: scale(1); opacity: 1; } }
+    h1 { color: var(--primary); font-size: 2.4em; margin-bottom: 0.2em; text-shadow: 0 0 20px rgba(0,191,255,0.6); }
+    h2 { font-size: 1.8em; color: var(--text-light); margin-bottom: 10px; }
+    p { font-size: 1.1em; color: var(--text-muted); }
     button {
       background: linear-gradient(90deg, var(--primary), var(--accent));
       border: none;
@@ -85,12 +62,7 @@
       box-shadow: 0 0 20px rgba(0,191,255,0.4);
       margin-top: 20px;
     }
-
-    button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 0 25px rgba(255,64,129,0.5);
-    }
-
+    button:hover { transform: translateY(-3px); box-shadow: 0 0 25px rgba(255,64,129,0.5); }
     input {
       padding: 12px;
       font-size: 1.1em;
@@ -104,56 +76,16 @@
       margin-top: 10px;
       transition: background 0.3s ease;
     }
-
-    input:focus {
-      background: rgba(255, 255, 255, 0.2);
-    }
-
-    #wordDisplay {
-      margin-top: 25px;
-      font-size: 1.8em;
-      font-weight: bold;
-      text-shadow: 0 0 15px rgba(255,255,255,0.6);
-      min-height: 50px;
-    }
-
-    .glow {
-      color: var(--accent);
-      text-shadow: 0 0 15px var(--accent), 0 0 30px var(--accent);
-      animation: pulse 1.5s infinite alternate;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 1; }
-      100% { transform: scale(1.1); opacity: 0.85; }
-    }
-
+    input:focus { background: rgba(255, 255, 255, 0.2); }
+    #wordDisplay { margin-top: 25px; font-size: 1.8em; font-weight: bold; text-shadow: 0 0 15px rgba(255,255,255,0.6); min-height: 50px; }
+    .glow { color: var(--accent); text-shadow: 0 0 15px var(--accent), 0 0 30px var(--accent); animation: pulse 1.5s infinite alternate; }
+    @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.1); opacity: 0.85; } }
     .hidden { display: none; }
-
-    /* Floating Lights */
-    .light {
-      position: absolute;
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.5;
-      animation: floatLight 15s infinite alternate ease-in-out;
-    }
-
-    @keyframes floatLight {
-      0% { transform: translateY(0) translateX(0); }
-      100% { transform: translateY(-100px) translateX(50px); }
-    }
-
+    .light { position: absolute; width: 120px; height: 120px; border-radius: 50%; filter: blur(80px); opacity: 0.5; animation: floatLight 15s infinite alternate ease-in-out; }
+    @keyframes floatLight { 0% { transform: translateY(0) translateX(0); } 100% { transform: translateY(-100px) translateX(50px); } }
     .light:nth-child(1) { background: var(--primary); top: 20%; left: 10%; animation-delay: 0s; }
     .light:nth-child(2) { background: var(--accent); bottom: 20%; right: 10%; animation-delay: 3s; }
-
-    @media (max-width: 600px) {
-      h1 { font-size: 2em; }
-      h2 { font-size: 1.5em; }
-      .card { padding: 30px 20px; }
-    }
+    @media (max-width: 600px) { h1 { font-size: 2em; } h2 { font-size: 1.5em; } .card { padding: 30px 20px; } }
   </style>
 </head>
 <body>
@@ -182,163 +114,168 @@
     <button onclick="restart()">Play Again</button>
   </div>
 
-  <script>
+<script>
 const subjects = [
-"apple","chair","dog","park","book","ball","cat","lamp","car","tree",
-"bread","table","fish","flower","bus","leaf","egg","river","cup","sun",
-"cheese","wall","bird","street","milk","shoe","rabbit","road","plate","moon",
-"butter","door","frog","garden","knife","mountain","fan","hill","spoon","lake",
-"orange","bed","cow","shore","juice","sofa","pig","cliff","tea","vine",
-"cake","window","horse","bridge","pie","sheep","trail","salad","bag","cookie",
-"stage","chicken","popcorn","fox","sandwich","pen","milkshake","clock","goat","kite",
-"lion","balloon","dice","deer","toy","tiger","hat","guitar","bear","jacket",
-"wolf","scarf","shoes","violin","owl","ring","piano","eagle","necklace","marker",
-"rain","trumpet","cloud","snow","sunflower","wind","water","melody","flower","fire",
-"leaf","dance","rock","root","branch","seed","grass","flowerpot","vine","oak",
-"friend","teacher","family","doctor","artist","pilot","writer","actor","singer","dancer",
-"coach","chef","farmer","neighbor","child","mirror","couch","curtain","desk","pencil",
-"basket","drum","bell","spoon","cupboard","windowpane","telescope","lantern","wagon","carpet",
-"backpack","stapler","chalk","chalkboard","paintbrush","easel","canvas","clay","pot","notebook",
-"journal","compass","map","flag","sign","ticket","candle","streetlight","fence","gate",
-"bridge","tunnel","road","trail","path","alley","plaza","statue","fountain","bench",
-"market","shop","bakery","cafe","hotel","theater","stadium","arena","playground","slide",
-"swing","sandbox","tent","campfire","boat","kayak","submarine","rocket","spaceship","satellite",
-"telescope","planetarium","galaxy","meteor","comet","starfish","coral","clam","pearl","crab",
-"lobster","seahorse","dolphin","whale","shark","octopus","turtle","penguin","seal","flamingo",
-"peacock","parrot","crow","sparrow","eagle","hawk","falcon","lion","tiger","leopard",
-"elephant","rhino","hippo","giraffe","zebra","camel","kangaroo","koala","panda","monkey",
-"gorilla","chimpanzee","lemur","rabbit","squirrel","chipmunk","hedgehog","deer","moose","elk",
-"buffalo","bison","goat","sheep","pig","cow","horse","donkey","llama","alpaca",
-"dog","cat","fox","wolf","bear","raccoon","skunk","otter","beaver","seal",
-"walrus","owl","hawk","eagle","crow","sparrow","apple","banana","orange","grape",
-"lemon","peach","pear","plum","cherry","strawberry","blueberry","raspberry","blackberry","melon",
-"watermelon","cantaloupe","kiwi","mango","papaya","pineapple","coconut","avocado","tomato","carrot",
-"potato","onion","garlic","pepper","cucumber","lettuce","spinach","broccoli","cauliflower","zucchini",
-"squash","pumpkin","corn","peas","beans","rice","wheat","oats","barley","quinoa",
-"pasta","noodle","bread","bagel","muffin","croissant","roll","toast","cracker","cereal",
-"milk","cheese","yogurt","butter","cream","icecream","chocolate","candy","cake","pie",
-"cookie","brownie","donut","waffle","pancake","juice","tea","coffee","soda","water",
-"sparkling","smoothie","cocktail","beer","wine","whiskey","rum","vodka","gin","tequila",
-"sword","shield","armor","helmet","bow","arrow","dagger","spear","axe","club",
-"hammer","pick","lance","flail","mace","crossbow","slingshot","net","trap","whip",
-"rope","chain","lock","key","door","window","wall","roof","floor","stairs",
-"elevator","ladder","bridge","tunnel","road","street","alley","path","trail","track",
-"rail","platform","station","airport","harbor","dock","port","ferry","canoe","kayak",
-"boat","ship","submarine","yacht","sailboat","rowboat","lifeboat","raft","paddle","oar",
-"tent","campfire","sleepingbag","backpack","compass","map","binoculars","flashlight","lantern","camera",
-"phone","laptop","tablet","watch","clock","calendar","notebook","pen","pencil","marker",
-"crayon","paint","brush","easel","canvas","clay","sculpture","statue","poster","frame",
-"mirror","curtain","rug","sofa","chair","table","bed","lamp","candle","basket",
-"bag","purse","wallet","belt","hat","cap","scarf","gloves","jacket","shirt",
-"pants","shorts","skirt","dress","shoes","boots","socks","tie","necklace","ring",
-"earrings","bracelet","watch","sunglasses","umbrella","coat","raincoat","sweater","hoodie","vest",
-"friend","family","brother","sister","mother","father","uncle","aunt","cousin","neighbor",
-"teacher","student","doctor","nurse","chef","artist","pilot","driver","engineer","scientist",
-"actor","singer","dancer","musician","writer","poet","magician","wizard","knight","pirate",
-"superhero","detective","robot","alien","zombie","vampire","ghost","fairy","unicorn","dragon",
-"castle","palace","tower","cottage","hut","apartment","house","tent","igloo","yurt",
-"forest","jungle","desert","mountain","hill","valley","river","lake","pond","ocean",
-"beach","shore","cliff","cave","island","volcano","waterfall","reef","canyon","gorge",
-"sun","moon","star","planet","cloud","rain","snow","wind","storm","lightning",
-"thunder","rainbow","fog","mist","shadow","light","fire","ice","stone","rock",
-"sand","mud","soil","grass","leaf","tree","flower","bush","vine","root",
-"seed","fruit","nut","berry","grain","herb","spice","vegetable","mushroom","fern",
-"oak","pine","maple","birch","willow","cactus","palm","bamboo","ivy","aloe",
-"rose","tulip","daisy","lily","sunflower","orchid","lavender","mint","basil","oregano",
-"thyme","sage","parsley","cilantro","dandelion","poppy","violet","jasmine","lotus","marigold",
-"drum","guitar","piano","violin","flute","trumpet","saxophone","clarinet","harp","tambourine",
-"maracas","xylophone","accordion","banjo","cello","trombone","oboe","triangle","gong","castanet",
-"stage","audience","spotlight","microphone","speaker","curtain","backstage","orchestra","band","choir",
-"concert","theater","movie","film","cartoon","animation","show","play","opera","ballet",
-"festival","party","celebration","birthday","holiday","vacation","trip","journey","adventure","expedition",
-"treasure","secret","mystery","puzzle","game","competition","race","tournament","match","challenge",
-"score","goal","winner","loser","team","player","coach","referee","judge","audience",
-"song","melody","rhythm","beat","tune","harmony","chord","note","verse","chorus",
-"painting","drawing","sketch","portrait","landscape","sculpture","photograph","frame","canvas","brush",
-"pen","pencil","marker","crayon","paper","notebook","journal","diary","story","novel",
-"poem","comic","manga","anime","cartoon","book","magazine","newspaper","article","essay",
-"friendship","love","happiness","sadness","fear","courage","magic","adventure","treasure","mystery",
-"secret","surprise","holiday","vacation","journey","festival","celebration","birthday","party","gift",
-"music","dance","song","melody","rhythm","beat","concert","stage","theater","show"
-];
+"alarm","arch","area","army","arrow","art","bake","balloon","bar","barn",
+"base","bath","beach","bedroom","bee","bell","belt","bend","berry","bike",
+"birdhouse","blanket","block","blow","boarder","boatman","bond","bone","boot","border",
+"branch","brick","brush","bubble","bucket","buffalo","builder","button","cabin","cable",
+"cactus","cakepan","camera","campfire","candlelight","cannon","canvas","cap","captain","carpeted",
+"carton","castle","cave","ceiling","cell","chain","chairman","chalk","chamber","chance",
+"changeable","channel","chapter","character","charge","check","cheek","chef","chest","chief",
+"chip","churchyard","circle","citizen","clay","clerk","click","clip","clockwise","clothes",
+"cloudy","coach","coal","coatroom","coffeehouse","coil","coin","collar","college","colorful",
+"comb","comfort","command","common","company","compare","competition","complaint","computerize","condition",
+"cone","connection","contest","cookbook","cooler","copy","cord","cornfield","corner","correct",
+"cost","cottage","cough","countryman","cousin","covering","cowboy","crack","cradle","craft",
+"crane","crash","crate","creek","crew","cricket","crisp","crop","crowd","cruise",
+"crystal","cub","cushion","custom","cycle","dad","damage","dance","danger","dark",
+"date","daughter","dawn","daylight","deal","deathbed","debate","decade","deck","deer",
+"degree","delivery","dentist","department","depth","deskman","detail","detective","dew","diamond",
+"dinnerware","direction","dirt","discovery","dish","disk","display","distance","doctorate","doghouse",
+"dollhouse","donkey","doorway","dot","double","doubt","downtown","draft","dragon","drawer",
+"dressmaker","driver","drop","drumstick","duckling","dustbin","duty","eagle","earring","earthquake",
+"edgewise","education","effect","eggplant","eight","elbow","elevator","elite","emotion","engineer",
+"entry","environment","error","escape","estate","evening","event","exam","example","exchange",
+"existence","exit","experiment","eyelet","factory","faculty","faint","fair","faith","familyroom",
+"fanlight","farmhouse","farmer","fast","fatherhood","faucet","feature","fellow","female","fencepost",
+"festival","fever","fieldwork","fightback","figure","film","filter","final","fingerprint","fireplace",
+"firework","fishing","flagpole","flame","flash","floorboard","flowerpot","flu","flyer","foam",
+"focus","fold","foodstuff","footpath","forehead","forestland","forklift","fort","fountain","frame",
+"franchise","freedom","friendship","front","frost","fruitstand","fuel","fun","furniture","game",
+"garage","gardenia","gas","gate","gather","gaze","gear","gene","general","geography",
+"giraffe","glassware","glove","goal","goatling","goldfish","good","goose","government","governor",
+"grade","grain","grandfather","grandmother","grapevine","grassland","gravel","great","greenhouse","grill",
+"grip","grocery","groundwork","grouping","guard","guess","guide","guitarist","gum","gun",
+"haircut","hairpin","half","hall","hammer","handbag","handkerchief","handle","hands","hangar",
+"harbor","hard","harmony","hatchet","headband","headline","health","heater","height","helmet",
+"herd","hidden","highway","hilltop","hint","history","hobby","holiday","homework","honey",
+"hook","hope","horn","hospitality","hotel","hour","household","hug","humor","hunt",
+"ice","idea","identity","illustration","image","imagination","impression","inch","income","increase",
+"index","industry","insect","inside","instrument","interest","iron","isle","item","jacket",
+"jam","jar","jaw","jeep","jewel","jobsite","jog","join","journey","judge",
+"juice","jump","jungle","junior","jury","justice","kettle","keyhole","kick","kid",
+"kind","kingdom","kiss","kitchen","knee","knife","knight","knot","knowledge","lab",
+"ladder","lakefront","lampstand","landscape","language","lap","large","last","latch","lawn",
+"layer","lead","leaflet","learning","leather","lecture","legion","length","lesson","letterbox",
+"library","lift","light","lineup","lioness","list","literature","living","load","loan",
+"lobby","locket","lodge","log","lonely","lookout","loss","lounge","love","low",
+"machine","magazine","mail","main","major","make","manor","maple","march","marketplace",
+"marriage","mask","match","material","meal","measure","meat","mechanic","media","meeting",
+"member","memory","menu","mess","metal","method","middle","migrant","milkman","mindset",
+"minute","mirror","mission","mist","mitten","model","moment","monkey","month","morning",
+"mother","motion","mount","movement","museum","music","nail","nameplate","nature","necklace",
+"nettle","news","nightfall","noise","note","notebook","number","nurse","object","observation","ocean",
+"office","officer","oilcan","old","opera","opinion","orange","order","organization","ornament",
+"oven","owner","pack","page","pail","paintbrush","pair","palace","palm","pan",
+"paperclip","parcel","parkway","part","party","passage","passenger","paste","patch","path",
+"patient","pattern","payment","peace","penalty","pencilcase","people","pepper","perform","period",
+"person","petal","phone","photo","piano","picture","piece","piglet","pilot","pin",
+"pipe","place","plan","plant","plate","playground","pleasure","pocket","poem","point",
+"police","pond","pool","popcorn","porter","position","potato","pouch","powder","power",
+"practice","price","pride","prison","process","product","professor","program","project","promise",
+"property","protection","pull","pumpkin","pupil","purchase","purpose","push","quartz","queen",
+"question","rabbit","race","rack","radio","rail","rainbow","ranch","range","rat",
+"rate","reaction","reading","reason","receipt","recipe","record","reduction","reflection","region",
+"relation","relative","religion","repair","repeat","report","request","research","resident","response",
+"rest","result","retail","return","revenue","review","reward","rhythm","ribbon","rice",
+"ring","river","roadway","robot","rock","role","roof","roommate","root","rope",
+"rose","route","rowboat","rule","run","sack","saddle","sale","salt","sand","sandwich","scale","school","science","scissors",
+"screw","seat","secretary","seed","selection","self","sense","servant","shade","shadow",
+"shake","shape","share","sheep","sheet","shelf","shell","ship","shirt","shoe",
+"shop","shore","short","shoulder","show","side","sight","sign","silk","silver",
+"simple","sink","sister","site","skate","skin","skirt","sky","slate","sleep",
+"slide","slip","smile","smoke","snow","soap","sock","soil","soldier","song",
+"sound","soup","space","spoon","spring","square","stamp","star","start","station",
+"steam","step","stick","stone","store","storm","story","street","stretch","strike",
+"string","strip","student","study","stump","substance","sugar","summer","sun","support",
+"surface","swim","swing","system","table","tail","take","talk","tank","tap",
+"task","taste","taxi","team","teeth","telephone","television","temperature","tent","test",
+"text","thank","theater","thing","thread","throne","thumb","ticket","tie","time",
+"tin","tip","tire","toe","tongue","tool","tooth","top","town","track",
+"train","transport","tree","trick","truck","trunk","trust","tube","tune","turn",
+"twig","type","umbrella","uncle","unit","use","valley","value","van","vase",
+"vegetable","vehicle","vest","village","voice","volcano","wagon","wall","war","water",
+"wave","way","wealth","weather","week","weight","wheel","whip","whistle","window",
+"wing","wire","wish","wood","word","work","worm","wound","yard","year",
+"yellow","yoke","young","zebra","zero","zinc","zone","zoo"];
 
+let totalPlayers = 0;
+let subject = '';
+let shuffledImposter = 0;
+let currentPlayer = 1;
+let randomStarter = 0;
+let lastImposter = null;
 
+function chooseImposterFairly() {
+  shuffledImposter = Math.floor(Math.random() * totalPlayers) + 1;
+}
 
+function startGame() {
+  totalPlayers = parseInt(document.getElementById('playerCount').value);
+  if (isNaN(totalPlayers) || totalPlayers < 3) {
+    alert('You need at least 3 players!');
+    return;
+  }
 
+  subject = subjects[Math.floor(Math.random() * subjects.length)];
+  chooseImposterFairly();
+  currentPlayer = 1;
 
-    let totalPlayers = 0;
-    let subject = '';
-    let imposter = 0;
-    let currentPlayer = 1;
-    let randomStarter = 0;
+  // Starter selection with 50% reroll chance
+  do {
+    randomStarter = Math.floor(Math.random() * totalPlayers) + 1;
+  } while (randomStarter === shuffledImposter && totalPlayers > 3 && Math.random() < 0.5);
 
-    function startGame() {
-      totalPlayers = parseInt(document.getElementById('playerCount').value);
-      if (isNaN(totalPlayers) || totalPlayers < 3) {
-        alert('You need at least 3 players!');
-        return;
-      }
+  document.getElementById('setup').classList.add('hidden');
+  document.getElementById('reveal').classList.remove('hidden');
+  updatePlayerLabel();
+}
 
-      subject = subjects[Math.floor(Math.random() * subjects.length)];
-      imposter = Math.floor(Math.random() * totalPlayers) + 1;
+function updatePlayerLabel() {
+  const label = document.getElementById('playerLabel');
+  const wordDisplay = document.getElementById('wordDisplay');
+  const revealBtn = document.getElementById('revealBtn');
+  wordDisplay.textContent = '';
+  wordDisplay.classList.remove('glow');
+  revealBtn.textContent = 'Show Word';
+  label.textContent = `Player ${currentPlayer}, tap to see your word`;
+}
 
-      // ensure random starter is independent from imposter
-      do {
-        randomStarter = Math.floor(Math.random() * totalPlayers) + 1;
-      } while (randomStarter === imposter && totalPlayers > 3 && Math.random() < 0.5);
+function revealWord() {
+  const wordDisplay = document.getElementById('wordDisplay');
+  const revealBtn = document.getElementById('revealBtn');
 
-      currentPlayer = 1;
-
-      document.getElementById('setup').classList.add('hidden');
-      document.getElementById('reveal').classList.remove('hidden');
+  if (wordDisplay.textContent === '') {
+    if (currentPlayer === shuffledImposter) {
+      wordDisplay.textContent = 'You are the IMPOSTER!';
+      wordDisplay.classList.add('glow');
+    } else {
+      wordDisplay.textContent = subject;
+    }
+    revealBtn.textContent = 'Hide and pass';
+  } else {
+    if (currentPlayer < totalPlayers) {
+      currentPlayer++;
       updatePlayerLabel();
+    } else {
+      lastImposter = shuffledImposter;
+      endReveal();
     }
+  }
+}
 
-    function updatePlayerLabel() {
-      const label = document.getElementById('playerLabel');
-      const wordDisplay = document.getElementById('wordDisplay');
-      const revealBtn = document.getElementById('revealBtn');
+function endReveal() {
+  document.getElementById('reveal').classList.add('hidden');
+  document.getElementById('startRound').classList.remove('hidden');
+  document.getElementById('startMsg').innerHTML =
+    `Player ${randomStarter} goes first!`;
+}
 
-      wordDisplay.textContent = '';
-      wordDisplay.classList.remove('glow');
-      revealBtn.textContent = 'Show Word';
-      label.textContent = `Player ${currentPlayer}, tap to see your word`;
-    }
-
-    function revealWord() {
-      const wordDisplay = document.getElementById('wordDisplay');
-      const revealBtn = document.getElementById('revealBtn');
-
-      if (wordDisplay.textContent === '') {
-        if (currentPlayer === imposter) {
-          wordDisplay.textContent = 'You are the IMPOSTER!';
-          wordDisplay.classList.add('glow');
-        } else {
-          wordDisplay.textContent = subject;
-        }
-        revealBtn.textContent = 'Hide and pass';
-      } else {
-        if (currentPlayer < totalPlayers) {
-          currentPlayer++;
-          updatePlayerLabel();
-        } else {
-          endReveal();
-        }
-      }
-    }
-
-    function endReveal() {
-      document.getElementById('reveal').classList.add('hidden');
-      document.getElementById('startRound').classList.remove('hidden');
-      document.getElementById('startMsg').textContent =
-        `Player ${randomStarter} goes first!`;
-    }
-
-    function restart() {
-      document.getElementById('startRound').classList.add('hidden');
-      document.getElementById('setup').classList.remove('hidden');
-    }
-  </script>
+function restart() {
+  document.getElementById('startRound').classList.add('hidden');
+  document.getElementById('setup').classList.remove('hidden');
+}
+</script>
 </body>
 </html>
-
